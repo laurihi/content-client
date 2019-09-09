@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient("content-repository")
-public interface ContentClient {
+public interface FeignContentClient {
 
     static final String CONTENT_REPO_BASE_MAPPING = "/content";
     static final String CONTENT_REPO_ID_URL = CONTENT_REPO_BASE_MAPPING + "/id/{identifier}";

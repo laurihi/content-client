@@ -1,6 +1,7 @@
 package fi.ambientia.sd.client.controllers;
 
-import fi.ambientia.sd.client.clients.ContentClient;
+import fi.ambientia.sd.client.clients.FeignContentClient;
+import fi.ambientia.sd.client.clients.RibbonContentClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,14 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class ContentClientController {
 
-    private ContentClient contentClient;
+    private FeignContentClient feignContentClient;
+    private RibbonContentClient ribbonContentClient;
 
-    public ContentClientController(@Autowired ContentClient contentClient){
-        this.contentClient = contentClient;
+    public ContentClientController(@Autowired FeignContentClient feignContentClient,
+                                   @Autowired RibbonContentClient ribbonContentClient){
+        this.feignContentClient = feignContentClient;
+        this.ribbonContentClient = ribbonContentClient;
     }
     @GetMapping("/feign")
     public String getContentUsingFeign() {
-        return contentClient.getContent("Feign-client");
+        return feignContentClient.getContent("Feign-client");
     }
 
+    @GetMapping("/ribbon")
+    public String getContentUsingRibbon() {
+        return ribbonContentClient.getContents("Ribbon-client");
+    }
 }
